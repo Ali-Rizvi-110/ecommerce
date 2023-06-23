@@ -1,0 +1,46 @@
+/* Home.css */
+
+.home-container {
+    /* Add container styles as per your layout requirements */
+}
+.up{
+    background-color: green;
+    width: 100vw;
+    height: 4vh;
+    align-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    color: white;
+}
+.up>div{
+    display: flex;
+    gap: 5vw;
+}
+.up1{
+    background-color: rgb(237, 229, 229);
+    width: 100vw;
+}
+
+.up1 div{
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #f2f2f2;
+/* Add navbar styles as per your design */
+}
+
+.category-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.category-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    /* Add styles for category items */
+}

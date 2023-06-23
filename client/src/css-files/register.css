@@ -1,0 +1,52 @@
+
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  text-align: right; /* Align inputs at the right end */
+}
+
+.form-group {
+  display: flex;
+  margin-bottom: 10px;
+  text-align: left;
+  justify-content: space-between;
+}
+
+
+label {
+  font-weight: bold;
+  text-align: left;
+}
+
+input {
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  /* justify-self: right; */
+   /* Reset input text alignment */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
