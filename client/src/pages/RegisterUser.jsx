@@ -120,7 +120,18 @@ const RegisterUser = () => {
                 />
             </div>
             { generatedOtp===1 && <button onClick={generateOtp}>Generate OTP</button> }
-            {generatedOtp!==1 && <input type="Number" onChange={(e)=>setMyotp(parseInt(e.target.value, 10))} />}
+            {generatedOtp !== 1 && (
+                <div className="form-group">
+                    <label htmlFor="otp">Enter otp form mail:</label>
+                    <input
+                    type="number"
+                    id="otp"
+                    onChange={(e) => setMyotp(parseInt(e.target.value, 10))}
+                    required
+                    autoComplete="off"
+                    />
+                </div>
+            )}
             {generatedOtp !== 1 && generatedOtp === myOtp && <button onClick = {handleSubmit} type="submit">Register</button>}
         </form>
         <h4>If Already Register <Link to="/login" >Login</Link></h4>

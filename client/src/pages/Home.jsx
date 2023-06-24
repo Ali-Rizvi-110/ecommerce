@@ -17,7 +17,7 @@ const Home = () => {
         const checkAccessToken = () => {
           const accessToken = sessionStorage.getItem('accessToken');
           if (accessToken) {
-            console.log('Access Token:', accessToken);
+            // console.log('Access Token:', accessToken);
             setName(path);
             // Perform any actions with the access token if needed
           } else {

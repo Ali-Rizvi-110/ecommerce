@@ -17,12 +17,13 @@ const Login = () => {
         password
       });
   
+      console.log(response);
       const { data } = response;
       if (data.accessToken) {
         // Store the access token in local storage
         sessionStorage.setItem('accessToken', data.accessToken);
         console.log(`User with email ${email} logged in`);
-        console.log("session ", JSON.stringify(sessionStorage))
+        // console.log("session ", JSON.stringify(sessionStorage))
   
         // Fetch the user details using the access token
         const userResponse = await axios.get('http://localhost:4500/api/v1/userinfo/details', {
@@ -30,7 +31,7 @@ const Login = () => {
             Authorization: `Bearer ${data.accessToken}`
           }
         });
-        console.log(userResponse);
+        // console.log(userResponse);
         const { firstName } = userResponse.data;
   
         // Navigate to the home page with the user ID
@@ -72,6 +73,7 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <h6><Link to="/forgot-password">Forgot Password </Link></h6>
       <h4>If Not Registered <Link to="/register">Register</Link></h4>
     </div>
   );

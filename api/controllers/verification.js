@@ -52,7 +52,7 @@ let generateOTP = () => {
   }return num;
 };
 // const sendTo = 'abhishekvishwakarma3244@gmail.com';
-
+// verify otp to get into the database (register)
 const authenticateOTP = async (req, res) => {
   try {
     const otp = generateOTP();
@@ -66,8 +66,56 @@ const authenticateOTP = async (req, res) => {
   }
 }
 
+// forgot password
+
+const forgotPassword = async (req, res) => {
+  try {
+    const otp = generateOTP();
+    const sendTo = req.body.email;
+    console.log("Req body ", req.body);
+    console.log("Req body ", req.body);
+    console.log("Req body ", req.body);
+    const result = await sendMail(sendTo, otp);
+    return res.status(200).json({result, otp: otp});
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('Internal Server Error in forgot Password');
+  }
+}
+
+const bcrypt = require('bcrypt');
+
+const changePassword = async (req, res) => {
+  try {
+    const newPassword = req.body.newPassword;
+    const email = req.body.email;
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the user's password
+    user.password = hashedPassword;
+    await user.save();
+    console.log(user.password);
+
+    return res.status(200).json({ message: 'Password changed successfully' });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
+
 module.exports = {
   authenticateOTP,
+  forgotPassword,
+  changePassword
 }
 
 // sendMail(sendTo, otp).then(result=> console.log('Email Sent...', result)).catch(error=> console.log(error.message));

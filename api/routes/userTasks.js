@@ -5,10 +5,12 @@ const User = require("../models/userSchema.js")
 
 // const {getAllTasks, getTask} = require('..')
 
-const {getAllUsers, createUser, deleteUser, getUser, loginUser, addToWishlist, addToCart, getWishlist, removeFromWishlist, getCart, increaseCartItem, decreaseCartItem} = require('../controllers/userTasks');
+const {getAllUsers, createUser, deleteUser, getUser, loginUser, addToWishlist, addToCart, getWishlist, 
+ getUserWithEmail, removeFromWishlist, getCart, increaseCartItem, decreaseCartItem} = require('../controllers/userTasks');
 
 router.route('/users').get(getAllUsers).post(createUser);
 router.route('/users/:id').delete(deleteUser).get(getUser);
+router.route('/user/:email').get(getUserWithEmail)
 router.route('/login').post(loginUser)
 
 const authenticateToken = require('../middleware/authenticateToken.js')

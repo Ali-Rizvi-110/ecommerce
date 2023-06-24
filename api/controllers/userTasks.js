@@ -11,10 +11,6 @@ const createUser = async (req, res) => {
       const { email, password, contact, firstName, lastName, address } = req.body;
       const person = await User.findOne({email});
       if(person!=null)return res.status(409).json('user email already exists');
-      // const generatedOTP = await authenticateOTP(email);
-      // console.log(generatedOTP);
-      // console.log('hello asdfhskdfj', generatedOTP);
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({
         email,
@@ -58,6 +54,7 @@ const deleteUser = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
+  console.log('Enter with user id');
     try {
       const id = req.params.id;
       const user = await User.findById(id);
@@ -70,6 +67,27 @@ const getUser = async (req, res) => {
       res.status(500).json({ err: 'Error in retrieving the user', error });
     }
 };
+
+const getUserWithEmail = async (req, res) => {
+  try {
+    console.log('Enter With email id');
+    const email = req.params.email;
+    const user = await User.findOne({email:email});
+    console.log(user);
+    if(!user){
+      console.log("error is here")
+      console.log("error is here")
+      console.log("error is here")
+      console.log("error is here")
+      console.log("error is here")
+      return res.status(404).json({msg: `user with ${email} not found`});
+    }
+    return res.status(200).json({email: email})
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json('Internal Server Error in getUserWIthEmail');
+  }
+}
   
 const comparePassword = async (password, hashedPassword) => {
   return await bcrypt.compare(password, hashedPassword);
@@ -82,16 +100,19 @@ const loginUser = async (req, res) => {
         // console.log(email)
       if (!user) {
         // User with the provided email doesn't exist
+        console.log("user not found", user);
         return res.status(400).json({ error: 'Invalid email or password' });
       }
+      console.log('password in database', password);
   
       // Check if the provided password matches the stored password using a password comparison method like bcrypt
   
       // Assuming you have a `comparePassword` method to compare passwords using bcrypt
       const passwordMatch = await comparePassword(password, user.password);
-  
+      
       if (!passwordMatch) {
         // Password doesn't match
+        console.log("password not match")
         return res.status(400).json({ error: 'Invalid email or password' });
       }
   
@@ -302,6 +323,8 @@ const loginUser = async (req, res) => {
     }
   };
   
+
+  
   // module.exports = { addToCart, increaseCartItem, decreaseCartItem, getCart };
   
   
@@ -311,6 +334,7 @@ const loginUser = async (req, res) => {
     getAllUsers,
     deleteUser,
     getUser,
+    getUserWithEmail,
     loginUser,
     addToWishlist,
     addToCart,
