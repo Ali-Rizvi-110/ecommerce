@@ -22,15 +22,15 @@ const ForgotPassword = () => {
         
         try {
         // Send a request to the server to generate and send OTP
-        const user = await axios.get(`http://localhost:4500/api/v1/userinfo/user/${email}`);
-        // console.log(user.data);
-        const response = await axios.post('http://localhost:4500/api/v1/forgot-password', {email});
-        setMessage(response.data.message);
-        setGeneratedOtp(response.data.otp);
+            const user = await axios.get(`http://localhost:4500/api/v1/userinfo/user/${email}`);
+            // console.log(user.data);
+            const response = await axios.post('http://localhost:4500/api/v1/forgot-password', {email});
+            setMessage(response.data.message);
+            setGeneratedOtp(response.data.otp);
 
         } catch (error) {
-        console.error('Error sending OTP:', error);
-        setMessage('An error occurred while sending OTP. Please try again.');
+            console.error('Error sending OTP:', error);
+            setMessage('An error occurred while sending OTP. Please try again.');
         }
     };
 
@@ -73,8 +73,7 @@ const ForgotPassword = () => {
         { generatedOtp===myOtp && newPassword &&
              <button onClick={changePassword} >Change Your Password</button>
         }
-
-        {message && <p>{message}</p>}
+        {message!=="" && <p>{message}</p>}
         </div>
     );
 };
