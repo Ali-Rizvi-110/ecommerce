@@ -29,8 +29,10 @@ const RegisterProduct = () => {
       console.log("handleImageUplaod");
       setImageUpload("Wait for image to be uploaded")
       const accessToken = sessionStorage.getItem('accessToken');
+      // console.log(accessToken);
       if(!accessToken){
-
+        console.log("Access token not found. Aborting image upload.");
+        return;
       }
       await axios.post('http://localhost:4500/api/v1/admin/verify-image', {accessToken});
       const response = await axios.post(CLOUD_LINK, formData);

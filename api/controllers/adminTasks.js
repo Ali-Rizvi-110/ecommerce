@@ -20,7 +20,6 @@ const verifyAdmin = async (req, res) => {
 
 const checkAdmin = (req, res, next) => {
   const { accessToken } = req.body;
-
   // Verify the access token
   try {
     const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
