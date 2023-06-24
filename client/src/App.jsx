@@ -12,6 +12,7 @@ import ShowWishlist from "./pages/ShowWishlist.jsx"
 import ShowCart from "./pages/ShowCart"
 import AdminLogin from './admin-pages/AdminLogin';
 import Dashboard from './admin-pages/Dashboard'
+import AdminProducts from './admin-pages/AdminProducts'
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: '/admin-dashboard',
     element: <Dashboard/>
+  },
+  {
+    path: '/admin-products',
+    element: <AdminProducts/>
   }
 ])
 

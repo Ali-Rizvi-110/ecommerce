@@ -18,6 +18,26 @@ const verifyAdmin = async (req, res) => {
   }
 };
 
+const checkAdmin = (req, res, next) => {
+  const { accessToken } = req.body;
+
+  // Verify the access token
+  try {
+    const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+    // Access token is valid
+    // Handle the image upload here
+    // Access the uploaded file using req.file
+    // Process the file, save it, and perform any required operations
+
+    // Return a response indicating the success of the upload
+    res.status(200).json({ message: 'Image uploaded successfully' });
+  } catch (error) {
+    // Access token is invalid or expired
+    res.status(401).json({ error: 'Invalid access token' });
+  }
+};
+
 module.exports = {
   verifyAdmin,
+  checkAdmin,
 };

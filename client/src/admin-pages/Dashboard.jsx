@@ -24,6 +24,7 @@ const Dashboard = () => {
         {/* Add your dashboard content here */}
 
         <button onClick={addProductHandler} >Add Products</button>
+        <button onClick={()=>navigate('/admin-products')} >Show All Products</button>
 
         </div>
     );

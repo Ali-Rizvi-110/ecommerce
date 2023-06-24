@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../css-files/register.css"
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -9,9 +9,12 @@ const RegisterUser = () => {
     const [password, setPassword] = useState('');
     const [contact, setContact] = useState('')
     const navigate = useNavigate('')
+    const [myOtp, setMyotp] = useState(0);
+    const [generatedOtp, setGeneratedOtp] = useState(1);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('Enter in handleSubmit');
         // Perform registration logic here
         try {
             const response = await axios.post('http://localhost:4500/api/v1/userinfo/users', {
@@ -21,17 +24,46 @@ const RegisterUser = () => {
                 password,
                 contact
             });
-            console.log(`user ${firstName} Added to the Database`)
+            // const otp = response.data.otp;
+            // setGeneratedOtp(otp);
+            console.log(response.user);
+            const name = response.data.user.firstName;
+            console.log(`user ${name} created into the database`);
+            navigate("/login");
         } catch (error) {
             console.log({err: "error in submitting form", error})
+            return;
         }
-        navigate("/login");
     };
+    useEffect(()=>{
+        console.log('changed', myOtp);
+        // console.log(typeof(generatedOtp), typeof(myOtp))
+        // if(generatedOtp==myOtp){
+        //     console.log("done");
+        // }
+    }, [myOtp])
+    useEffect(()=>{
+        // console.log('changed generated otp', generatedOtp);
+    }, [generatedOtp]);
+    const generateOtp = async (e)=> {
+        e.preventDefault();
+        console.log('Enter generateOtp');
+        try {
+            console.log("Enter try of generateOtp");
+            const response = await axios.post('http://localhost:4500/api/v1/verifyotp', {email});
+            setGeneratedOtp(response.data.otp)
+            // console.log(typeof(response.data.otp));
+            // console.log("response ", response.data.otp);
+            // console.log(generatedOtp, "my generated otp");
+        } catch (error) {
+            console.log({err: 'Error in generateOtp Function', error});
+        }
+    }
 
     return (
         <div className="register-page">
         <h2>Register</h2>
-        <form onSubmit={handleSubmit} className="register-form">
+        <form className="register-form">
             <div className="form-group">
             <label htmlFor="first-name">First Name:</label>
             <input
@@ -79,7 +111,7 @@ const RegisterUser = () => {
             <div className="form-group">
                 <label htmlFor="contact">Contact No:</label>
                 <input
-                    type="tel"
+                    type="number"
                     id="contact"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
@@ -87,9 +119,11 @@ const RegisterUser = () => {
                     autoComplete="off"
                 />
             </div>
-            <button type="submit">Register</button>
+            { generatedOtp===1 && <button onClick={generateOtp}>Generate OTP</button> }
+            {generatedOtp!==1 && <input type="Number" onChange={(e)=>setMyotp(parseInt(e.target.value, 10))} />}
+            {generatedOtp !== 1 && generatedOtp === myOtp && <button onClick = {handleSubmit} type="submit">Register</button>}
         </form>
-        <h4>If Already Register <Link to="/login" >Login</Link> </h4>
+        <h4>If Already Register <Link to="/login" >Login</Link></h4>
         </div>
 )};
 

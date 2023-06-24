@@ -4,13 +4,16 @@ const dotenv = require("dotenv");
 const bcrypt = require("bcrypt")
 
 dotenv.config();
+const {authenticateOTP} = require('./verification.js');
 
 const createUser = async (req, res) => {
     try {
       const { email, password, contact, firstName, lastName, address } = req.body;
       const person = await User.findOne({email});
       if(person!=null)return res.status(409).json('user email already exists');
-  
+      // const generatedOTP = await authenticateOTP(email);
+      // console.log(generatedOTP);
+      // console.log('hello asdfhskdfj', generatedOTP);
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await User.create({

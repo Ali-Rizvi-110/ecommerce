@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterProduct = () => {
-
+  
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: '',
@@ -13,19 +13,31 @@ const RegisterProduct = () => {
     imageUrl: '',
     price: 0
   });
+  const [imageUpload, setImageUpload] = useState('');
+  const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
+  const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
+  const CLOUD_LINK = import.meta.env.VITE_CLOUD_LINK;
+  // console.log(UPLOAD_PRESET, CLOUD_NAME, CLOUD_LINK);
 
   const handleImageUpload = async (event) => {
-    const image = event.target.files[0];
-    const formData = new FormData();
-    formData.append('file', image);
-    formData.append('upload_preset', 'firstPreset');
-    formData.append('cloud_name', 'dgyftncun')
-
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/dgyftncun/image/upload', formData);
+      const image = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', image);
+      formData.append('upload_preset', UPLOAD_PRESET);
+      formData.append('cloud_name', CLOUD_NAME)
+      console.log("handleImageUplaod");
+      setImageUpload("Wait for image to be uploaded")
+      const accessToken = sessionStorage.getItem('accessToken');
+      if(!accessToken){
+
+      }
+      await axios.post('http://localhost:4500/api/v1/admin/verify-image', {accessToken});
+      const response = await axios.post(CLOUD_LINK, formData);
       const imageUrl = response.data.secure_url;
       console.log("image URL", imageUrl)
       setProduct((prevProduct) => ({ ...prevProduct, imageUrl }));
+      setImageUpload("");
     } catch (error) {
       console.error('Error uploading image:', error);
     }
@@ -54,7 +66,7 @@ const RegisterProduct = () => {
         }
       });
       console.log(`Product ${product.name} added to the database`);
-      navigate('/showproducts');
+      navigate('/admin-products');
     } catch (error) {
       console.log({ err: 'Error in submitting form', error });
     }
@@ -131,7 +143,7 @@ const RegisterProduct = () => {
             required
           />
         </div>
-
+        {imageUpload}
         <button type="submit">Register</button>
       </form>
       {/* {product.imageUrl && (

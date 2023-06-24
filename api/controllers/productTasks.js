@@ -19,8 +19,25 @@ const showAllProducts = async (req, res) => {
         res.status(500).json({err: "error in showAllProduct function", error})
     }
 }
+const deleteProduct = async (req, res) => {
+    console.log('runned')
+    try{
+        const _id = req.body.productId;
+        console.log(_id);
+        const product = await Product.findOneAndDelete({_id});
+        console.log(product);
+        if(product){
+            return res.status(200).json(product);
+        }
+        return res.status(404).json('Product is not present');
+    }catch(error){
+        console.log(error);
+        return res.status(500).json('Internal server error');
+    }
+}
 
 module.exports = {
     createProduct,
-    showAllProducts
+    showAllProducts,
+    deleteProduct
 };

@@ -5,7 +5,7 @@ const app = express();
 const usersRouter = require('./routes/userTasks')
 const productRouter = require('./routes/productTasks')
 const adminRouter = require('./routes/adminRoutes.js')
-
+const verificationRoute = require('./routes/verificationRoute.js')
 
 const cors = require('cors');
 
@@ -22,6 +22,7 @@ app.get('/', (req, res)=>{
 app.use('/api/v1/userinfo', usersRouter);
 app.use('/api/v1/productinfo', productRouter);
 app.use('/api/v1/admin', adminRouter);
+app.use('/api/v1', verificationRoute);
 // app.get('/api/v1/products', (req, res)=>{
 //     res.send("Temp page")
 // })

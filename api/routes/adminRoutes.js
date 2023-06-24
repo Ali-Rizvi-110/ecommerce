@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const {verifyAdmin} = require('../controllers/adminTasks.js')
+const {verifyAdmin, checkAdmin} = require('../controllers/adminTasks.js')
 const authenticateToken = require('../middleware/authenticateToken.js')
 
 router.route('/admin-login').post(verifyAdmin);
+router.route('/verify-image').post(authenticateToken, checkAdmin);
 
 module.exports = router;
