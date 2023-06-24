@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        console.log(generatedOtp);
+        // console.log(generatedOtp);
     }, [generatedOtp]);
     useEffect(()=>{
         console.log(typeof(generatedOtp), typeof(myOtp));
