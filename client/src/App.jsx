@@ -14,6 +14,7 @@ import AdminLogin from './admin-pages/AdminLogin';
 import Dashboard from './admin-pages/Dashboard'
 import AdminProducts from './admin-pages/AdminProducts'
 import ForgotPassword from './pages/ForgotPassword';
+import ShowProductsCategory from './pages/ShowProductsCategory';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: "showproducts",
     element: <ShowProduct/>
+  },
+  {
+    path: "showproducts/:category",
+    element: <ShowProductsCategory/>
   },
   {
     path: "/",

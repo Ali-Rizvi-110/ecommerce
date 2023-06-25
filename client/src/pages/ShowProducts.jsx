@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../css-files/ShowProduct.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ShowProduct = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  // const {category} = useParams();
 
   useEffect(() => {
     fetchData();
+    // console.log(category);
   }, []);
 
   const fetchData = async () => {

@@ -13,10 +13,12 @@ const ForgotPassword = () => {
     useEffect(()=>{
         // console.log(generatedOtp);
     }, [generatedOtp]);
+
     useEffect(()=>{
         console.log(typeof(generatedOtp), typeof(myOtp));
         console.log(myOtp);
     }, [myOtp]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -34,7 +36,7 @@ const ForgotPassword = () => {
         }
     };
 
-
+    
     const handleChange = (e) => {
         setEmail(e.target.value);
     };

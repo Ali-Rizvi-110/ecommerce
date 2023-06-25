@@ -55,3 +55,9 @@ input::-webkit-inner-spin-button{
   -webkit-appearance: none;
   margin: 0;
 }
+
+.options>div{
+  /* background-color: red; */
+  width: 20vw;
+  display: flex;
+}

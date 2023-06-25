@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,13 +11,17 @@ const RegisterProduct = () => {
     description: '',
     seller: '',
     imageUrl: '',
-    price: 0
+    price: 0,
+    category: ''
   });
   const [imageUpload, setImageUpload] = useState('');
   const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
   const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
   const CLOUD_LINK = import.meta.env.VITE_CLOUD_LINK;
   // console.log(UPLOAD_PRESET, CLOUD_NAME, CLOUD_LINK);
+  useEffect(()=>{
+    console.log(product);
+  }, [product]);
 
   const handleImageUpload = async (event) => {
     try {
@@ -31,6 +35,7 @@ const RegisterProduct = () => {
       const accessToken = sessionStorage.getItem('accessToken');
       // console.log(accessToken);
       if(!accessToken){
+        setImageUpload('First Login to upload the Image');
         console.log("Access token not found. Aborting image upload.");
         return;
       }
@@ -61,7 +66,8 @@ const RegisterProduct = () => {
         description: product.description,
         seller: product.seller,
         imageUrl: product.imageUrl,
-        price: product.price
+        price: product.price,
+        category: product.category
       },{
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -92,10 +98,10 @@ const RegisterProduct = () => {
         <div className='form-group'>
           <label htmlFor="price">Product Price:</label>
           <input
-            type="text"
+            type="number"
             id="price"
             name="price"
-            value={product.price}
+            value={product.price? product.price : ""}
             onChange={handleChange}
             required
           />
@@ -146,6 +152,102 @@ const RegisterProduct = () => {
           />
         </div>
         {imageUpload}
+        <div className='form-group options' style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <label>Categories:</label>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="women's fashion"
+                checked={product.category === "women's fashion"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Women's Fashion
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="men's fashion"
+                checked={product.category === "men's fashion"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Men's Fashion
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="electronics"
+                checked={product.category === "electronics"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Electronics
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="home and beauty"
+                checked={product.category === "home and beauty"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Home and Beauty
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="home and garden"
+                checked={product.category === "home and garden"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Home and Garden
+            </label>
+          </div>
+          <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="computer"
+                checked={product.category === "computer"}
+                onChange={handleChange}
+              />
+              &nbsp;
+              Computer
+            </label>
+          </div>
+          {/* <div>
+            <label>
+              <input
+                type="radio"
+                name="category"
+                value="category7"
+                checked={product.category === "category7"}
+                onChange={handleChange}
+              />
+              &nbsp;
+            men's fashion
+            </label>
+          </div> */}
+
+          {/* Add more categories as needed */}
+        </div>
         <button type="submit">Register</button>
       </form>
       {/* {product.imageUrl && (
